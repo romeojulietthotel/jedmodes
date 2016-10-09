@@ -152,6 +152,7 @@ private define dedupe (sessionfile)
 		    || (1 != sscanf(fields[3], "0x%x", &flags)))
 			throw DataError, "session file appears corrupt";
 		file = fields[0];
+		% Okay to do this here, on exit.
 		if (NULL == stat_file (file))
 			continue;
 		files[file] = fields;
@@ -260,9 +261,6 @@ private define load_session ()
 			throw DataError, "session file appears corrupt";
 
 		file = fields[0];
-
-		if (NULL == stat_file (file))
-			continue;
 
 		if (strcmp (file,expand_filename(__argv[1])) != 0)
 			continue;
